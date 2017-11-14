@@ -24,9 +24,10 @@
         </div>
     </div>
     <div class="container">
-        <textarea rows="4" id="messageToSend" cols="50">
+        <textarea rows="4" readonly id="messages" cols="50">
              
         </textarea>
+        <input type="text" class="form-control" id="messageToSend">
         <button type="button" onclick="sendMessage()" class="btn btn-primary">Secondary</button>
     </div>
     <h1 id="userNameLogin"></h1>

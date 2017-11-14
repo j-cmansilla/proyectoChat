@@ -26,7 +26,7 @@ $( document ).ready(function() {
 
 function cargarChat(fromThisUser, toThisUser){
     var userNameToSend = document.getElementById('userToSend');
-    var messageToSend = document.getElementById('messageToSend');
+    var messageToSend = document.getElementById('messages');
     messageToSend.value = "";
     userNameToSend.innerHTML = toThisUser;
     fromUser = fromThisUser;
@@ -51,9 +51,9 @@ function cargarChat(fromThisUser, toThisUser){
 
 function sendMessage(){
     var messageToSend = document.getElementById('messageToSend');
-    if(!fromUser){
-        return;
-    }
+    var messages = document.getElementById('messages');
+    if(!messageToSend.value) return;
+    if(!fromUser)return;
     var message = {
         "fromUser": fromUser,
         "toUser":toUser,
@@ -68,4 +68,5 @@ function sendMessage(){
            messageToSend.value = ""; 
         }
     });
+    cargarChat(fromUser,toUser);
 }
