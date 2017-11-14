@@ -76,10 +76,10 @@ function cargarChat(fromThisUser, toThisUser){
                     messageToSend.value = messageToSend.value+chats[i].fromUser+": "+chats[i].message+"\n";
                 }
                 if(chats[i].fromUser == fromUser && chats[i].toUser == toUser ){
-                    $(usersMessages).append(`<li class="list-group-item">${"Yo: "+chats[i].message}</li>`);
+                    $(usersMessages).append(`<li class="list-group-item list-group-item-success mensajesEnviados">${chats[i].message}</li>`);
                 }
                 if(chats[i].fromUser == toUser && chats[i].toUser == fromUser ){
-                    $(usersMessages).append(`<li class="list-group-item">${messageToSend.value+chats[i].fromUser+": "+chats[i].message}</li>`);
+                    $(usersMessages).append(`<li class="list-group-item list-group-item-info">${chats[i].message}</li>`);
                 }
             }
         }

@@ -61,8 +61,6 @@
               </ul>
           </div>
           <div class="col-sm-2">
-              <textarea hidden rows="10" class="form-control" resize="none" readonly id="messages" cols="10">
-              </textarea>
               <ul class="mensajes" id="usersMessages">
                   
               </ul>
@@ -70,6 +68,8 @@
           </div>
       </div>
       
+      <textarea hidden rows="10" class="form-control" resize="none" readonly id="messages" cols="10">
+        </textarea>
         <!--<button type="button" onclick="sendMessage()" class="btn btn-primary">Send Message</button>-->
         
     

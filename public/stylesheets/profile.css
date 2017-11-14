@@ -1,6 +1,9 @@
 .mensajes{
     height:400px;overflow:auto;width:750px;
-    background-color: rgb(95, 117, 131);
     padding-right: 0;
+    background-color: rgb(154, 156, 150);
     margin:0;
+}
+.mensajesEnviados{
+    text-align: right;
 }
