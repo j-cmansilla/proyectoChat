@@ -31,7 +31,7 @@ router.post('/login', function(req, res, next) {
     if (err) throw err;
     // object of all the users
     if(userFound[0]){
-      res.render('profile', { userName: userFound[0].userName });
+      res.render('profile', { userName: userFound[0].userName , userToSend:"Please select a chat..."});
     }else{
       res.render('login', { title: 'Express' });
     }

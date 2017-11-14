@@ -6,12 +6,14 @@
     <script src="/javascripts/jquery.tabledit.min.js"></script>
     <script src="/javascripts/jquery.tabledit.js"></script>
     <script src="/javascripts/profile.js"></script>
-    
+    <link rel='stylesheet' href='/stylesheets/profile.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     
-    <link rel="stylesheet" href='/stylesheets/style.css'>
+    <!--<link rel="stylesheet" href='/stylesheets/style.css'>-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand">{{userName}}</a>
+        <b><a class="navbar-brand">{{userName}}</a></b>
+        <a class="navbar-brand">is chatting with: </a>
+        <b><a class="navbar-brand" id="userToSend">{{userToSend}}</a></b>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,24 +48,31 @@
         </div>
       </nav>
   </head>
-  <body>
+  <body background="/images/wallpaper2.jpg">
     <h1>{{ title }}</h1>
+    <h1 hidden id="userToSend"></h1>
     <h1 hidden  id="userName">{{userName}}</h1>
+    
     <div class="container">
-        <h1>Users:</h1>
-        <div class="list-group" id="listaUsuarios">
-        </div>
-        <h1>Chat:</h1>
-        <h1 hidden id="userToSend"></h1>
-        <div class="list-group" id="listaDeChats">
-        </div>
-    </div>
-    <div class="container">
-        <textarea rows="10" readonly id="messages" cols="25">
-             
-        </textarea>
-        <input type="text" class="form-control" id="messageToSend">
+      <div class="row">
+          <div class="col-sm-2">
+              <ul class="list-group" id="usersList">
+                  
+              </ul>
+          </div>
+          <div class="col-sm-2">
+              <textarea hidden rows="10" class="form-control" resize="none" readonly id="messages" cols="10">
+              </textarea>
+              <ul class="mensajes" id="usersMessages">
+                  
+              </ul>
+            <input type="text" class="form-control" id="messageToSend">
+          </div>
+      </div>
+      
         <!--<button type="button" onclick="sendMessage()" class="btn btn-primary">Send Message</button>-->
+        
+    
     </div>
     <h1 id="userNameLogin"></h1>
   </body>
