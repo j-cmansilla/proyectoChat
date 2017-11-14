@@ -39,7 +39,7 @@ function cargarChat(fromThisUser, toThisUser){
             chats = res;
             for(var i = 0;i<chats.length;i++){
                 if(chats[i].fromUser == fromUser && chats[i].toUser == toUser ){
-                    messageToSend.value = messageToSend.value+chats[i].fromUser+":"+chats[i].message+"\n";
+                    messageToSend.value = messageToSend.value+"Yo:"+chats[i].message+"\n";
                 }
                 if(chats[i].fromUser == toUser && chats[i].toUser == fromUser ){
                     messageToSend.value = messageToSend.value+chats[i].fromUser+":"+chats[i].message+"\n";
