@@ -47,6 +47,8 @@ $(document).keypress(function(e) {
     }
 });
 
+
+
 function cargarChat(fromThisUser, toThisUser){
     var userNameToSend = document.getElementById('userToSend');
     var messageToSend = document.getElementById('messages');
@@ -84,7 +86,7 @@ function cargarChat(fromThisUser, toThisUser){
             }
         }
     });
-    $('#messages').animate({scrollTop:10000000000000000000000000000000}, 'slow');
+    //$('#messages').animate({scrollTop:10000000000000000000000000000000}, 'slow');
     $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
 }
 

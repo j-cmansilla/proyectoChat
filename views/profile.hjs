@@ -42,13 +42,13 @@
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
           </form>
         </div>
       </nav>
   </head>
-  <body background="/images/wallpaper2.jpg">
+  <body background="/images/pokemon.png">
     <h1>{{ title }}</h1>
     <h1 hidden id="userToSend"></h1>
     <h1 hidden  id="userName">{{userName}}</h1>
@@ -56,15 +56,17 @@
     <div class="container">
       <div class="row">
           <div class="col-sm-2">
+              <h4 class="colorTitulos">Users:</h4>
               <ul class="list-group" id="usersList">
                   
               </ul>
           </div>
           <div class="col-sm-2">
+              <input class="form-control" id="search" type="search" placeholder="Search" aria-label="Search">
               <ul class="mensajes" id="usersMessages">
                   
               </ul>
-            <input type="text" class="form-control" id="messageToSend">
+            <input type="text" placeholder="Say Hello..." class="form-control" id="messageToSend">
           </div>
       </div>
       
