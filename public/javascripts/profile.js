@@ -22,6 +22,22 @@ $( document ).ready(function() {
             }
         }
     });
+    $.ajax({
+        url: "/chats",
+        method: 'GET',
+        type: 'json',
+        success: function(res){
+            chats = res;
+            console.log(chats);
+        }
+    });
+});
+
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        sendMessage();
+    }
 });
 
 function cargarChat(fromThisUser, toThisUser){
@@ -31,6 +47,8 @@ function cargarChat(fromThisUser, toThisUser){
     userNameToSend.innerHTML = toThisUser;
     fromUser = fromThisUser;
     toUser = toThisUser;
+    $( "#messageToSend" ).focus();
+    $('html, body').animate({scrollTop:$(document).height()}, 'slow');
     $.ajax({
         url: "/chats",
         method: 'GET',
@@ -47,6 +65,7 @@ function cargarChat(fromThisUser, toThisUser){
             }
         }
     });
+    $('#messages').animate({scrollTop:1000000000000000000}, 'fast');
 }
 
 function sendMessage(){
