@@ -7,9 +7,23 @@
     <script src="/javascripts/jquery.tabledit.min.js"></script>
     <script src="/javascripts/jquery.tabledit.js"></script>
     <script src="/javascripts/profile.js"></script>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
   </head>
   <body>
     <h1>{{ title }}</h1>
     <h1>Welcome {{ userName }}</h1>
+    <h1 hidden  id="userName">{{userName}}</h1>
+    <div class="container">
+        <h2>Users:</h2>
+        <div class="list-group" id="listaUsuarios">
+        </div>
+        <h2>Chats:</h2>
+        <div class="list-group" id="listaDeChats">
+        </div>
+    </div>
+    <div class="container">
+      
+    </div>
+    <h1 id="userNameLogin"></h1>
   </body>
 </html>
