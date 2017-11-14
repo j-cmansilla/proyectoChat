@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema');
+mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema', {
+    useMongoClient: true});
 var Chats = require('../models/message');
 
 /* GET users listing. */

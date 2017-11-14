@@ -2,8 +2,12 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema');
+mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema', {
+  useMongoClient: true});
 var User = require('../models/usuarios');
+
+const crypto = require('crypto');
+const secret = 'abcdefg';
 
 
 router.use(bodyParser.urlencoded({
@@ -20,12 +24,12 @@ router.get('/', function(req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
-
-
 router.post('/login', function(req, res, next) {
   let newUser = new User ({
     userName: req.body.userNameLogin,
-    password: req.body.passwordLogin
+    password: crypto.createHmac('sha256', secret)
+    .update(req.body.passwordLogin)
+    .digest('hex')
   });
   User.find({"userName":newUser.userName, "password":newUser.password}, function(err, userFound) {
     if (err) throw err;
@@ -42,7 +46,10 @@ router.post('/login', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   let newUser = new User ({
     userName: req.body.userName,
-    password: req.body.password
+    //password: req.body.password
+    password: crypto.createHmac('sha256', secret)
+    .update(req.body.password)
+    .digest('hex')
   });
 
   User.find({"userName":newUser.userName}, function(err, userFound) {
