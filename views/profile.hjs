@@ -2,27 +2,32 @@
 <html>
   <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" href='/stylesheets/style.css'>
     <script src="/javascripts/jquery-3.2.1.min.js"></script>
     <script src="/javascripts/jquery.tabledit.min.js"></script>
     <script src="/javascripts/jquery.tabledit.js"></script>
     <script src="/javascripts/profile.js"></script>
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    
+    <link rel="stylesheet" href='/stylesheets/style.css'>
   </head>
   <body>
     <h1>{{ title }}</h1>
     <h1>Welcome {{ userName }}</h1>
     <h1 hidden  id="userName">{{userName}}</h1>
     <div class="container">
-        <h2>Users:</h2>
+        <h1>Users:</h1>
         <div class="list-group" id="listaUsuarios">
         </div>
-        <h2>Chats:</h2>
+        <h1>Chat:</h1>
+        <h1 hidden id="userToSend"></h1>
         <div class="list-group" id="listaDeChats">
         </div>
     </div>
     <div class="container">
-      
+        <textarea rows="4" id="messageToSend" cols="50">
+             
+        </textarea>
+        <button type="button" onclick="sendMessage()" class="btn btn-primary">Secondary</button>
     </div>
     <h1 id="userNameLogin"></h1>
   </body>
