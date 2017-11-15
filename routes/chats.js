@@ -4,6 +4,19 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema', {
     useMongoClient: true});
 var Chats = require('../models/message');
+var edge = require('edge');
+
+var EncryotWithDll = edge.func({
+    assemblyFile: "dlls/Encryption.dll",
+    typeName: "Encryption.RSA",
+    methodName: "EncryptForP"
+});
+var DecryptWithDll = edge.func({
+    assemblyFile: "dlls/Encryption.dll",
+    typeName: "Encryption.RSA",
+    methodName: "DecryptForP"
+});
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -20,6 +33,7 @@ router.post('/', function(req, res, next) {
         fromUser: req.body.fromUser,
         toUser: req.body.toUser,
         message: req.body.message
+       
     });
     newMessage.save(function(err) {
         if (err) throw err;
