@@ -90,28 +90,76 @@ function cargarChat(fromThisUser, toThisUser){
     $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
 }
 
+function enviarDatos(){
+    if(!fromUser)return;
+    var documentUploaded = document.getElementById('upload');
+    var form = $('#fileUploadForm')[0];
+    var data = new FormData(form);
+    var archivo = `${documentUploaded.files[0].name+" "}<a class="btn btn-primary" href="${'/upload/'+documentUploaded.files[0].name}" role="button">Download</a>`;
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "/profile/upload",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+        },
+        error: function (e) {
+        }
+    });
+    var message = {
+        "fromUser": fromUser,
+        "toUser":toUser,
+        "message":archivo.toString()
+    }
+    $.ajax({
+        url: "/chats",
+        method: 'POST',
+        data: message,
+        type: 'json',
+        success: function(res){
+           messageToSend.value = ""; 
+        }
+    });
+    cargarChat(fromUser,toUser);
+}
+
 function uploadFile(){
     var documentUploaded = document.getElementById('upload');
+    if(!fromUser)return;
+    var archivo = `<a class="btn btn-primary" href="${'/upload/'+documentUploaded.files[0].name}" role="button">Download</a>`;
     //console.log(documentUploaded.files.length == 1);
     if(documentUploaded.files.length == 1){
-        console.log(documentUploaded.files);
-        var uploaded = documentUploaded.files[0];
-        var form_data = new FormData();
-        form_data.append('file', uploaded);
-        console.log(form_data);
-        $.ajax({
-            type:'POST',
-            url: "/profile/upload",
-            data:uploaded,
-            processData:false,
-            contentType: false,
-            success: function(res){
-
-            }
-        });
+        var message = {
+            "fromUser": fromUser,
+            "toUser":toUser,
+            "message":archivo
+        }
+        alert(message.fromUser+"-"+message.toUser+"-"+message.message);
         return;
     }
     console.log('esta vacio');
+}
+
+function sendFile(thismessage){
+    var message = {
+        "fromUser": fromUser,
+        "toUser":toUser,
+        "message":thismessage
+    }
+    $.ajax({
+        url: "/chats",
+        method: 'POST',
+        data: message,
+        type: 'json',
+        success: function(res){
+           messageToSend.value = ""; 
+        }
+    });
+    cargarChat(fromUser,toUser);
 }
 
 function sendMessage(){

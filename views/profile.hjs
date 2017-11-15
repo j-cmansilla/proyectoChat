@@ -67,9 +67,14 @@
                   
               </ul>
             <input type="text" placeholder="Say Hello..." class="form-control" id="messageToSend">
-            
+            <!--<form action="/profile/upload" method="post" enctype='multipart/form-data'>
               <input type="file" name="fileName" id="upload">
-              <button onclick="uploadFile()">Upload</button>
+              <input type="submit" onclick="uploadFile()">
+            </form>-->
+            <form action="" id="fileUploadForm" onSubmit="enviarDatos(); return false" method="post" enctype='multipart/form-data'>
+              <input type="file" name="fileName" id="upload">
+              <input type="submit">
+            </form>
           </div>
       </div>
       <textarea hidden rows="10" class="form-control" resize="none" readonly id="messages" cols="10">
