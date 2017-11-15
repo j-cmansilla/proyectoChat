@@ -6,14 +6,18 @@ mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema', {
 var Chats = require('../models/message');
 var edge = require('edge');
 
-//var hello = edge.func('./dlls/RSA.cs');
-
 var EncryptionwithDll = edge.func({
   assemblyFile: "dlls/Encryption.dll",
   typeName: "Encryption.RSA",
-  methodName: "EncryptForP"
+  methodName: "EncryptForP",
+  references: [
+    ("./dll/Encryption.dll")] 
 });
-//hello('Node.js', function (error, result) { ... });
+
+EncryptionwithDll('text input', function (error, result) {
+    if(error) throw error;
+    console.log(result);
+});
 /*var DecryptionwithDll = edge.func({
     assemblyFile: "dlls/Encryption.dll",
     typeName: "Encryption.RSA",

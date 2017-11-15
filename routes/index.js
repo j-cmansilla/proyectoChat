@@ -46,7 +46,6 @@ router.post('/profile', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   let newUser = new User ({
     userName: req.body.userName,
-    //password: req.body.password
     password: crypto.createHmac('sha256', secret)
     .update(req.body.password)
     .digest('hex')
