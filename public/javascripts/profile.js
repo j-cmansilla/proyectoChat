@@ -31,7 +31,6 @@ $( document ).ready(function() {
         type: 'json',
         success: function(res){
             chats = res;
-            console.log(chats);
         }
     });
 });
@@ -60,6 +59,7 @@ function cargarChat(fromThisUser, toThisUser){
     messageToSend.value = "";
     userNameToSend.innerHTML = toThisUser;
     fromUser = fromThisUser;
+    var archivo = `<button type="button" class="btn btn-warning">Warning</button>`;
     toUser = toThisUser;
     $( "#userToSend" ).innerHTML = toThisUser.toString();
     $( "#messageToSend" ).focus();
@@ -88,6 +88,30 @@ function cargarChat(fromThisUser, toThisUser){
     });
     //$('#messages').animate({scrollTop:10000000000000000000000000000000}, 'slow');
     $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
+}
+
+function uploadFile(){
+    var documentUploaded = document.getElementById('upload');
+    //console.log(documentUploaded.files.length == 1);
+    if(documentUploaded.files.length == 1){
+        console.log(documentUploaded.files);
+        var uploaded = documentUploaded.files[0];
+        var form_data = new FormData();
+        form_data.append('file', uploaded);
+        console.log(form_data);
+        $.ajax({
+            type:'POST',
+            url: "/profile/upload",
+            data:uploaded,
+            processData:false,
+            contentType: false,
+            success: function(res){
+
+            }
+        });
+        return;
+    }
+    console.log('esta vacio');
 }
 
 function sendMessage(){

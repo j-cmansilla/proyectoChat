@@ -57,7 +57,7 @@
         <div id="login">   
           <h1>Welcome Back!</h1>
           
-          <form action="/login" method="post">
+          <form action="/profile" method="post">
           
             <div class="field-wrap">
             <label>

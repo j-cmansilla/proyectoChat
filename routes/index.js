@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
-router.post('/login', function(req, res, next) {
+router.post('/profile', function(req, res, next) {
   let newUser = new User ({
     userName: req.body.userNameLogin,
     password: crypto.createHmac('sha256', secret)
