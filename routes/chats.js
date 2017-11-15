@@ -4,6 +4,21 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema', {
     useMongoClient: true});
 var Chats = require('../models/message');
+var edge = require('edge');
+
+//var hello = edge.func('./dlls/RSA.cs');
+
+var EncryptionwithDll = edge.func({
+  assemblyFile: "dlls/Encryption.dll",
+  typeName: "Encryption.RSA",
+  methodName: "EncryptForP"
+});
+//hello('Node.js', function (error, result) { ... });
+/*var DecryptionwithDll = edge.func({
+    assemblyFile: "dlls/Encryption.dll",
+    typeName: "Encryption.RSA",
+    methodName: "DecryptForP"
+  });*/
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
