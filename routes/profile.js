@@ -25,6 +25,10 @@ router.get('/', function(req, res, next) {
 
 router.post('/download', function(req, res, next) {
     console.log("Archive "+req.body.fileToDownload);
+    CompressWithDll(req.body.fileToDownload, function (error, result) {
+        if(error) throw error;
+        console.log(result);
+    });
     var pathFile = path.join(__dirname,'..','/uploads/',req.body.fileToDownload);
     console.log(pathFile);
     res.download(pathFile, function(err){
