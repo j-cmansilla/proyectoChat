@@ -51,7 +51,6 @@ router.post('/', function(req, res, next) {
     let newMessage = new Chats ({
         fromUser: req.body.fromUser,
         toUser: req.body.toUser,
-       // message: req.body.message
         message: a
        
     });
