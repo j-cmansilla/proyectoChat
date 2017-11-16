@@ -132,8 +132,8 @@ function downloadFile(fileToDownload){
     console.log("THIS IS THE FILE: "+file.fileToDownload);
     $.ajax({
         type: "GET",
-        url: "/profile/download",
-       data: "id="+file.fileToDownload.toString(),
+        url: "/profile/descargarArchivo",
+       //data: {"id":file.fileToDownload.toString()},
        success: function(res){
         
         }
@@ -154,7 +154,7 @@ function enviarDatos(){
     var form = $('#fileUploadForm')[0];
     var data = new FormData(form);
     //let defaultRoute = "uploads";
-    var archivo = `${documentUploaded.files[0].name+" "}<a><button class="btn btn-primary" onclick="downloadFile('${documentUploaded.files[0].name}')">Download</button></a>`;
+    var archivo = `${documentUploaded.files[0].name+" "}<a href="/profile/download/${documentUploaded.files[0].name}"><button class="btn btn-primary">Download</button></a>`;
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
