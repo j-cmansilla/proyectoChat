@@ -2,6 +2,19 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var path = require('path');
+var edge = require('edge');
+
+var CompressWithDll = edge.func({
+    assemblyFile: "dlls/Lab1-Compresion-de-Datos.dll",
+    typeName: "Lab1_Compresion_de_Datos.Utilities.Compress",
+    methodName: "CompressForP"
+});
+
+var DecompressWithDll = edge.func({
+    assemblyFile: "dlls/Lab1-Compresion-de-Datos.dll",
+    typeName: "Lab1_Compresion_de_Datos.Utilities.Compress",
+    methodName: "DecompressForP"
+});
 const nodeRes = require('node-res')
 //var upload = multer({dest:'uploads/'});
 
