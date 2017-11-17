@@ -131,14 +131,6 @@ function downloadFile(fileToDownload){
         
         }
     });
-    /*$.ajax({
-        url: "/profile/download",
-        type: 'POST',
-        data:file,
-        success: function(res){
-           
-        }
-    });*/
 }
 
 function enviarDatos(){

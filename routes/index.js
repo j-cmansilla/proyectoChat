@@ -8,16 +8,32 @@ var User = require('../models/usuarios');
 const crypto = require('crypto');
 const secret = 'abcdefg';
 
-var jwt = require('express-jwt');
+var jwt_express = require('express-jwt');
+var jwt = require('jwt-simple');
+var jwt_decode = require('jwt-decode');
+var moment = require('moment')
 
-
+//var expires = moment().add('days', 7).valueOf();
+function createToken(user){
+  console.log("USUARIO => " + user);
+  const payload = {
+    Username: user.userName,
+    Password: user.password,
+    Ini: moment().unix(),
+    Exp: moment().add(10,'m').unix()
+  };
+  var token = jwt.encode(payload,"EST");
+  console.log("TOKEN => "+ token);
+    if (typeof localStorage === "undefined" || localStorage === null) {
+      var LocalStorage = require('node-localstorage').LocalStorage;
+      localStorage = new LocalStorage('./scratch');
+    }
+    localStorage.setItem('jwt',JSON.stringify(token));
+}
 router.use(bodyParser.urlencoded({
   extended: true
 }));
 
-/**bodyParser.json(options)
-* Parses the text as JSON and exposes the resulting object on req.body.
-*/
 router.use(bodyParser.json());
 
 /* GET home page. */
@@ -32,6 +48,9 @@ router.post('/profile', function(req, res, next) {
     .update(req.body.passwordLogin)
     .digest('hex')
   });
+  console.log("TEST");
+  createToken(newUser);
+  console.log("END");
   User.find({"userName":newUser.userName, "password":newUser.password}, function(err, userFound) {
     if (err) throw err;
     // object of all the users
@@ -47,7 +66,6 @@ router.post('/profile', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   let newUser = new User ({
     userName: req.body.userName,
-    //password: req.body.password
     password: crypto.createHmac('sha256', secret)
     .update(req.body.password)
     .digest('hex')
@@ -68,5 +86,7 @@ router.post('/register', function(req, res, next) {
   });
   res.render('login', { title: 'Express' });
 });
+
+
 
 module.exports = router;
