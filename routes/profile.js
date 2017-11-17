@@ -90,7 +90,7 @@ function comp (){
     console.log("  DLL>>>>")
     console.log("  File name => "+path);
     CompressWithDll( "./uploads/" + path, function (error, result) {
-        if(error) throw error;
+        if(error) throw console.log(error);
         console.log("  compress result: ");
         console.log(result);
     });
