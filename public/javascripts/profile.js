@@ -13,13 +13,6 @@ $( document ).ready(function() {
             users = res;
             let userlog = document.getElementById('userName');
             for(var i = 0; i < users.length;i++){
-                /*if(userlog.innerHTML.toString() !== users[i].userName.toString()){
-                    $(listaUsuarios).append(`<a onclick="cargarChat('${userlog.innerHTML}','${users[i].userName}')" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">${users[i].userName}</h5>
-                    </div>
-                  </a>`);
-                }*/
                 if(userlog.innerHTML.toString() !== users[i].userName.toString()){
                     $(usersList).append(`<li onclick="cargarChat('${userlog.innerHTML}','${users[i].userName}')" class="list-group-item">${users[i].userName}</li>`);
                 }
@@ -132,8 +125,8 @@ function downloadFile(fileToDownload){
     console.log("THIS IS THE FILE: "+file.fileToDownload);
     $.ajax({
         type: "GET",
-        url: "/profile/download",
-       data: "id="+file.fileToDownload.toString(),
+        url: "/profile/descargarArchivo",
+       //data: {"id":file.fileToDownload.toString()},
        success: function(res){
         
         }
@@ -154,7 +147,7 @@ function enviarDatos(){
     var form = $('#fileUploadForm')[0];
     var data = new FormData(form);
     //let defaultRoute = "uploads";
-    var archivo = `${documentUploaded.files[0].name+" "}<a><button class="btn btn-primary" onclick="downloadFile('${documentUploaded.files[0].name}')">Download</button></a>`;
+    var archivo = `${documentUploaded.files[0].name+" "}<a href="/profile/download/${documentUploaded.files[0].name}"><button class="btn btn-primary">Download</button></a>`;
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',

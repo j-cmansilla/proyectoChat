@@ -25,12 +25,11 @@ router.get('/', function(req, res, next) {
     if (err) throw err;
     // object of all the users
     userFound.forEach(function(userFound){
-        console.log(userFound);
+        //console.log(userFound);
         {
             var a;
             DecryptWithDll(userFound.message, function (error, result) {
                 if(error) throw error;
-                console.log(result);
                 a = result
             });
             userFound.message = a;
@@ -44,7 +43,6 @@ router.post('/', function(req, res, next) {
     var a;
     EncryotWithDll(req.body.message, function (error, result) {
         if(error) throw error;
-        console.log(result);
         a = result
     });
     
