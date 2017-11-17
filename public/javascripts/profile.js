@@ -144,9 +144,11 @@ function downloadFile(fileToDownload){
 function enviarDatos(){
     if(!fromUser)return;
     var documentUploaded = document.getElementById('upload');
+    var fileNameUploaded = document.getElementById('fileNameUploaded');
     var form = $('#fileUploadForm')[0];
     var data = new FormData(form);
-    $( "#fileNameUploaded" ).innerHTML = documentUploaded.files[0].name.toString();
+    //$( "#fileNameUploaded" ).innerHTML = documentUploaded.files[0].name.toString();
+    fileNameUploaded.innerHTML = documentUploaded.files[0].name.toString();
     //let defaultRoute = "uploads";
     var archivo = `${documentUploaded.files[0].name+" "}<a href="/profile/download/${documentUploaded.files[0].name}"><button class="btn btn-primary">Download</button></a>`;
     $.ajax({
@@ -252,7 +254,7 @@ function cargarChatCliente(fromThisUser, toThisUser){
         }
     });
     //$('#messages').animate({scrollTop:10000000000000000000000000000000}, 'slow');
-    $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
+    $(usersMessages).animate({scrollTop:100000000000000000000000000000000}, 'slow');
 }
 
 function sendMessage(){

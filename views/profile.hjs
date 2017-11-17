@@ -104,7 +104,9 @@
         });
 
         $(fileUploadForm).submit(function(){
-          console.log("VALUE: "+$(fileNameUploaded).html());
+          var archivo = $(fileNameUploaded).html()+' <a href="/profile/download/'+$(fileNameUploaded).html()+'>'+'<button class="btn btn-primary">Download</button></a>';
+          console.log("FILE: "+archivo);
+          socket.emit('send message', archivo);
         });
 
         socket.on('new message',function(messageSent){

@@ -67,6 +67,7 @@ io.sockets.on('connection',function(socket){
     io.sockets.emit('new message', {msg:data});
   });
 
+
   socket.on('user sending', function(data){
     fromUser = data;
   });
