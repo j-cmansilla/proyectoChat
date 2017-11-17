@@ -26,15 +26,17 @@ router.get('/download/:id', function(req, res, next) {
     var file = 'uploads/'+req.params.id;
     console.log("test");
     console.log(req.params.id);
-    path = req.params.id;
-    desc();
-    res.download(file, function(err){
-        if(err) console.log('ERROR: '+err);
-        else console.log('Archivo descargado!');
-        
-        comp();
-    });
-    
+    if(req.params.id)
+    {
+        path = req.params.id;
+        desc();
+        res.download(file, function(err){
+            if(err) console.log('ERROR: '+err);
+            else console.log('Archivo descargado!');
+
+            comp();
+        });
+    }
 });
 
 router.get('/downloadFile:id', function(req, res, next) {

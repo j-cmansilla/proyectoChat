@@ -5,9 +5,10 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://ad:ad@ds147265.mlab.com:47265/usuariosdelsistema', {
   useMongoClient: true});
 var User = require('../models/usuarios');
-
 const crypto = require('crypto');
 const secret = 'abcdefg';
+
+var jwt = require('express-jwt');
 
 
 router.use(bodyParser.urlencoded({
