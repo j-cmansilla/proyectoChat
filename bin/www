@@ -12,6 +12,7 @@ var userSelected;
 var toUser; 
 var fromUser;
 var connections = [];
+var decide = false;
 
 /**
  * Get port from environment and store in Express.
@@ -36,7 +37,25 @@ server.on('error', onError);
 server.on('listening', onListening);
 io.sockets.on('connection',function(socket){
   connections.push(socket);
+  //users[socket.userName] = socket;
+  
+  console.log('CONNECTED '+users);
   console.log('Connected! %s Sockets available.',connections.length);
+
+  socket.on('login', function(data){
+    var add = false;
+    for(var i=0;users.length;i++){
+      if(users[i] === data){
+        console.log(users[i]);
+        console.log(users);
+        add = true;
+      }
+    }
+    if(!add){
+      users.push(data);
+      console.log(users);
+    }
+  });
 
   socket.on('disconnect', function(data){
     connections.splice(connections.indexOf(socket), 1);
@@ -52,10 +71,12 @@ io.sockets.on('connection',function(socket){
     fromUser = data;
   });
 
+  socket.on('message sent', function(){
+    console.log('Message sent!');
+  });
+
   socket.on('user selected', function(data){
-    console.log('USER SELECTED '+data.user+" MESSAGE "+data.mess);
-    toUser = data;
-    io.sockets.emit('decide', {user:data.user, msg:data.mess});
+      io.sockets.emit('decide', {user:data.user, msg:data.mess});
   });
 
 });

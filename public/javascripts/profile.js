@@ -79,6 +79,7 @@ function cargarChat(fromThisUser, toThisUser){
     var userNameToSend = document.getElementById('userToSend');
     var messageToSend = document.getElementById('messages');
     var userMessages = document.getElementById('usersMessages');
+    var userToRecibe = document.getElementById('userWhoRecibe');
     //$(usersMessages).innerHTML = "";
     while( userMessages.firstChild ){
         userMessages.removeChild( userMessages.firstChild );
@@ -99,16 +100,11 @@ function cargarChat(fromThisUser, toThisUser){
             chats = res;
             for(var i = 0;i<chats.length;i++){
                 if(chats[i].fromUser == fromUser && chats[i].toUser == toUser ){
-                    messageToSend.value = messageToSend.value+"Yo: "+chats[i].message+"\n";
-                }
-                if(chats[i].fromUser == toUser && chats[i].toUser == fromUser ){
-                    messageToSend.value = messageToSend.value+chats[i].fromUser+": "+chats[i].message+"\n";
-                }
-                if(chats[i].fromUser == fromUser && chats[i].toUser == toUser ){
                     $(usersMessages).append(`<li class="list-group-item list-group-item-success mensajesEnviados">${chats[i].message}</li>`);
                 }
                 if(chats[i].fromUser == toUser && chats[i].toUser == fromUser ){
                     $(usersMessages).append(`<li class="list-group-item list-group-item-info">${chats[i].message}</li>`);
+                    userWhoRecibe.innerHTML = chats[i].fromUser;
                 }
             }
         }

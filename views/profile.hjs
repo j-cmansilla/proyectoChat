@@ -14,6 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <b><a id="userNameSending" class="navbar-brand">{{userName}}</a></b>
         <a class="navbar-brand">is chatting with: </a>
+        <b><a class="navbar-brand" hidden id="userWhoRecibe">{{userToSend}}</a></b>
         <b><a class="navbar-brand" id="userToSend">{{userToSend}}</a></b>
         <b><a class="navbar-brand" hidden id="fileNameUploaded"></a></b>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,6 +87,12 @@
       $(function(){
         var socket = io.connect();
         var $message = $('#messageToSend');
+
+        $(document).ready(function(){
+          console.log('LOGIN! '+$(userNameSending).html());
+          //socket.emit('login',$(userNameSending).html());
+        });
+
         $(document).keypress(function(e) {
           if(e.which == 13) {
             if($(messageToSend).is(':focus')){
@@ -103,16 +110,18 @@
         socket.on('new message',function(messageSent){
           if($(userToSend).html()==='Please select a chat...') return;
           console.log("THIS IS THE MESSAGE = >"+messageSent.msg);
-          socket.emit('user selected',{user: $(userToSend).html(), mess:messageSent.msg});
+          console.log('COMPARE: '+$(userWhoRecibe).html()+"...."+$(userToSend).html());
+          if($(userWhoRecibe).html() === $(userToSend).html()){
+            $(usersMessages).append('<li class="list-group-item list-group-item-info">'+messageSent.msg+'</li>');
+            $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
+          }
+          //socket.emit('user selected',{user: $(userToSend).html(), mess:messageSent.msg});
         });
 
         socket.on('decide', function(userToDecide){
           if($(userToSend).html()==='Please select a chat...') return;
-          console.log($(userNameSending).html()+"...."+userToDecide.user);
-          if($(userNameSending).html() === userToDecide.user){
-            $(usersMessages).append('<li class="list-group-item list-group-item-info">'+userToDecide.msg+'</li>');
-            $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
-          }
+          
+          socket.emit('message sent');
         });
 
         $( "ul" ).click(function() {
