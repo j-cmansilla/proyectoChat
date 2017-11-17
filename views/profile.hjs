@@ -6,14 +6,16 @@
     <script src="/javascripts/jquery.tabledit.min.js"></script>
     <script src="/javascripts/jquery.tabledit.js"></script>
     <script src="/javascripts/profile.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <link rel='stylesheet' href='/stylesheets/profile.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-8">
     <!--<link rel="stylesheet" href='/stylesheets/style.css'>-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <b><a class="navbar-brand">{{userName}}</a></b>
+        <b><a id="userNameSending" class="navbar-brand">{{userName}}</a></b>
         <a class="navbar-brand">is chatting with: </a>
         <b><a class="navbar-brand" id="userToSend">{{userToSend}}</a></b>
+        <b><a class="navbar-brand" hidden id="fileNameUploaded"></a></b>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -69,7 +71,7 @@
             <input type="text" placeholder="Say Hello..." class="form-control" id="messageToSend">
             <form action="" id="fileUploadForm" onSubmit="enviarDatos(); return false" method="post" enctype='multipart/form-data'>
               <input type="file" name="fileName" id="upload">
-              <input type="submit">
+              <input id="attach" type="submit">
             </form>
           </div>
       </div>
@@ -80,5 +82,43 @@
     
     </div>
     <h1 id="userNameLogin"></h1>
+    <script>
+      $(function(){
+        var socket = io.connect();
+        var $message = $('#messageToSend');
+        $(document).keypress(function(e) {
+          if(e.which == 13) {
+            if($(messageToSend).is(':focus')){
+            if(!$(messageToSend).val()) return;
+              console.log('MESSAGE: '+$(messageToSend).val());
+              socket.emit('send message', $(messageToSend).val());
+            }
+          }
+        });
+
+        $(fileUploadForm).submit(function(){
+          console.log("VALUE: "+$(fileNameUploaded).html());
+        });
+
+        socket.on('new message',function(messageSent){
+          if($(userToSend).html()==='Please select a chat...') return;
+          console.log("THIS IS THE MESSAGE = >"+messageSent.msg);
+          socket.emit('user selected',{user: $(userToSend).html(), mess:messageSent.msg});
+        });
+
+        socket.on('decide', function(userToDecide){
+          if($(userToSend).html()==='Please select a chat...') return;
+          console.log($(userNameSending).html()+"...."+userToDecide.user);
+          if($(userNameSending).html() === userToDecide.user){
+            $(usersMessages).append('<li class="list-group-item list-group-item-info">'+userToDecide.msg+'</li>');
+            $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
+          }
+        });
+
+        $( "ul" ).click(function() {
+        });
+        
+      });
+    </script>
   </body>
 </html>

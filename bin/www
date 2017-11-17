@@ -7,6 +7,11 @@
 var app = require('../app');
 var debug = require('debug')('proyectochat:server');
 var http = require('http');
+var users = [];
+var userSelected;
+var toUser; 
+var fromUser;
+var connections = [];
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +25,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -28,7 +34,31 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+io.sockets.on('connection',function(socket){
+  connections.push(socket);
+  console.log('Connected! %s Sockets available.',connections.length);
 
+  socket.on('disconnect', function(data){
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('Disconected! %s Sockets available.',connections.length);
+  });
+
+  socket.on('send message', function(data){
+    console.log('Youre sending a message');
+    io.sockets.emit('new message', {msg:data});
+  });
+
+  socket.on('user sending', function(data){
+    fromUser = data;
+  });
+
+  socket.on('user selected', function(data){
+    console.log('USER SELECTED '+data.user+" MESSAGE "+data.mess);
+    toUser = data;
+    io.sockets.emit('decide', {user:data.user, msg:data.mess});
+  });
+
+});
 /**
  * Normalize a port into a number, string, or false.
  */

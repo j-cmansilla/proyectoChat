@@ -14,7 +14,7 @@ $( document ).ready(function() {
             let userlog = document.getElementById('userName');
             for(var i = 0; i < users.length;i++){
                 if(userlog.innerHTML.toString() !== users[i].userName.toString()){
-                    $(usersList).append(`<li onclick="cargarChat('${userlog.innerHTML}','${users[i].userName}')" class="list-group-item">${users[i].userName}</li>`);
+                    $(usersList).append(`<li onclick="cargarChat('${userlog.innerHTML}','${users[i].userName}')" class="list-group-item liSelected">${users[i].userName}</li>`);
                 }
             }
         }
@@ -117,6 +117,10 @@ function cargarChat(fromThisUser, toThisUser){
     $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
 }
 
+function scroll(){
+    $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
+}
+
 function downloadFile(fileToDownload){
     fileToDownloadFromServer = fileToDownload;
     var file = {
@@ -146,6 +150,7 @@ function enviarDatos(){
     var documentUploaded = document.getElementById('upload');
     var form = $('#fileUploadForm')[0];
     var data = new FormData(form);
+    $( "#fileNameUploaded" ).innerHTML = documentUploaded.files[0].name.toString();
     //let defaultRoute = "uploads";
     var archivo = `${documentUploaded.files[0].name+" "}<a href="/profile/download/${documentUploaded.files[0].name}"><button class="btn btn-primary">Download</button></a>`;
     $.ajax({
@@ -176,7 +181,7 @@ function enviarDatos(){
            //messageToSend.value = ""; 
         }
     });
-    cargarChat(fromUser,toUser);
+    cargarChatCliente(fromUser,toUser);
 }
 
 function uploadFile(){
@@ -215,7 +220,47 @@ function sendFile(thismessage){
     cargarChat(fromUser,toUser);
 }
 
+function cargarChatCliente(fromThisUser, toThisUser){
+    var userNameToSend = document.getElementById('userToSend');
+    var messageToSend = document.getElementById('messages');
+    var userMessages = document.getElementById('usersMessages');
+    //$(usersMessages).innerHTML = "";
+    while( userMessages.firstChild ){
+        userMessages.removeChild( userMessages.firstChild );
+    }
+    messageToSend.value = "";
+    userNameToSend.innerHTML = toThisUser;
+    fromUser = fromThisUser;
+    var archivo = `<button type="button" class="btn btn-warning">Warning</button>`;
+    toUser = toThisUser;
+    $( "#userToSend" ).innerHTML = toThisUser.toString();
+    $( "#messageToSend" ).focus();
+    $('html, body').animate({scrollTop:$(document).height()}, 'slow');
+    $.ajax({
+        url: "/chats",
+        method: 'GET',
+        type: 'json',
+        success: function(res){
+            chats = res;
+            for(var i = 0;i<chats.length;i++){
+                if(chats[i].fromUser == fromUser && chats[i].toUser == toUser ){
+                    messageToSend.value = messageToSend.value+"Yo: "+chats[i].message+"\n";
+                }
+                if(chats[i].fromUser == toUser && chats[i].toUser == fromUser ){
+                    messageToSend.value = messageToSend.value+chats[i].fromUser+": "+chats[i].message+"\n";
+                }
+                if(chats[i].fromUser == fromUser && chats[i].toUser == toUser ){
+                    $(usersMessages).append(`<li class="list-group-item list-group-item-success mensajesEnviados">${chats[i].message}</li>`);
+                }
+            }
+        }
+    });
+    //$('#messages').animate({scrollTop:10000000000000000000000000000000}, 'slow');
+    $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
+}
+
 function sendMessage(){
+
     var messageToSend = document.getElementById('messageToSend');
     var messages = document.getElementById('messages');
     if(!messageToSend.value) return;
@@ -234,5 +279,6 @@ function sendMessage(){
            messageToSend.value = ""; 
         }
     });
-    cargarChat(fromUser,toUser);
+    //scroll();
+    cargarChatCliente(fromUser,toUser);
 }
