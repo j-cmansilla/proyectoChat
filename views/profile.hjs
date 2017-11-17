@@ -104,15 +104,14 @@
         });
 
         $(fileUploadForm).submit(function(){
-          var archivo = $(fileNameUploaded).html()+' <a href="/profile/download/'+$(fileNameUploaded).html()+'>'+'<button class="btn btn-primary">Download</button></a>';
+          var archivo = $(fileNameUploaded).html()+' <a href="/profile/download/'+$(fileNameUploaded).html().toString()+'>'+'<button class="btn btn-primary">Download</button></a>';
           console.log("FILE: "+archivo);
           socket.emit('send message', archivo);
         });
 
         socket.on('new message',function(messageSent){
           if($(userToSend).html()==='Please select a chat...') return;
-          console.log("THIS IS THE MESSAGE = >"+messageSent.msg);
-          console.log('COMPARE: '+$(userWhoRecibe).html()+"...."+$(userToSend).html());
+          console.log('<li class="list-group-item list-group-item-info">'+messageSent.msg+'</li>');
           if($(userWhoRecibe).html() === $(userToSend).html()){
             $(usersMessages).append('<li class="list-group-item list-group-item-info">'+messageSent.msg+'</li>');
             $(usersMessages).animate({scrollTop:10000000000000000000000000000000}, 'slow');
