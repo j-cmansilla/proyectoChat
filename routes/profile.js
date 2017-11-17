@@ -9,7 +9,6 @@ var CompressWithDll = edge.func({
     typeName: "Lab1_Compresion_de_Datos.Utilities.Compress",
     methodName: "CompressForP"
 });
-
 var DecompressWithDll = edge.func({
     assemblyFile: "dlls/Lab1-Compresion-de-Datos.dll",
     typeName: "Lab1_Compresion_de_Datos.Utilities.Compress",
@@ -23,19 +22,19 @@ router.get('/', function(req, res, next) {
   res.status(200).end();
 });
 
-var DecompressWithDll = edge.func({
-    assemblyFile: "dlls/Lab1-Compresion-de-Datos.dll",
-    typeName: "Lab1_Compresion_de_Datos.Utilities.Compress",
-    methodName: "DecompressForP"
-});
-
 router.get('/download/:id', function(req, res, next) {
     var file = 'uploads/'+req.params.id;
-    //console.log(req.params.id);
+    console.log("test");
+    console.log(req.params.id);
+    path = req.params.id;
+    desc();
     res.download(file, function(err){
         if(err) console.log('ERROR: '+err);
         else console.log('Archivo descargado!');
+        
+        comp();
     });
+    
 });
 
 router.get('/downloadFile:id', function(req, res, next) {
@@ -61,35 +60,51 @@ router.get('/img', function(req, res) {
     console.log(req.file);
     res.status(201).end();
 });*/
-var filePath = ""; //original path
-router.post('/upload', function(req, res,next) {
+router.post('/upload', function(req, res, next) {
 	var upload = multer({
         storage: storage
-    }).single('fileName')
+    }).single('fileName');
 
-	upload(req, res, function(err) {
-		res.end('File is uploaded')
-    })
-    console.log("here");
-    console.log(filePath);
-   /*CompressWithDll( filePath + "$./uploads", function (error, result) {
-        if(error) throw error;
-        console.log("compress result: ");
-        console.log(result);
-    });*/
-})
+    upload(req, res, function(err) {
+        res.end('File is uploaded')
+        console.log("test");
+        path =req.file.originalname;
+        console.log("end");
+        comp();
+    });    
+});
+
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './uploads')
-    },
-    filename: function (req, file, callback) {
+    }, filename: function (req, file, callback) {
         console.log(file)
         callback(null, file.originalname)
     }
- });
- 
- var upload = multer({ storage: storage });
+});
+var path = "Empty"; 
+function comp (){
+    console.log("  DLL>>>>")
+    console.log("  File name => "+path);
+    CompressWithDll( "./uploads/" + path, function (error, result) {
+        if(error) throw error;
+        console.log("  compress result: ");
+        console.log(result);
+    });
+    console.log("  END");
+}
+function desc(){
+    console.log("  DLL>>>>")
+    console.log("  File name => "+ "./uploads/" + path +".rlex");
+    DecompressWithDll( "./uploads/" + path +".rlex", function (error, result) {
+        if(error) throw error;
+        console.log("  decompress result: ");
+        console.log(result);
+    });
+    console.log("  END");
+}
+ var upload = multer({ storage: storage },);//nop
  
 /* GET users listing. */
 router.get('/', function(req, res, next) {
