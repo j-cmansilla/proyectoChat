@@ -25,10 +25,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/download', function(req, res, next) {
     console.log("Archive "+req.body.fileToDownload);
-    CompressWithDll(req.body.fileToDownload, function (error, result) {
-        if(error) throw error;
-        console.log(result);
-    });
     var pathFile = path.join(__dirname,'..','/uploads/',req.body.fileToDownload);
     console.log(pathFile);
     res.download(pathFile, function(err){
@@ -72,14 +68,22 @@ router.get('/img', function(req, res) {
     console.log(req.file);
     res.status(201).end();
 });*/
-
+var filePath = ""; //original path
 router.post('/upload', function(req, res,next) {
 	var upload = multer({
-		storage: storage
-	}).single('fileName')
+        storage: storage
+    }).single('fileName')
+
 	upload(req, res, function(err) {
 		res.end('File is uploaded')
-	})
+    })
+    console.log("here");
+    console.log(filePath);
+   CompressWithDll( filePath + "$./uploads", function (error, result) {
+        if(error) throw error;
+        console.log("compress result: ");
+        console.log(result);
+    });
 })
 
 var storage = multer.diskStorage({
@@ -88,7 +92,7 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
         console.log(file)
-		callback(null, file.originalname)
+        callback(null, file.originalname)
     }
  });
  
