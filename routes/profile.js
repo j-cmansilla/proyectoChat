@@ -79,11 +79,11 @@ router.post('/upload', function(req, res,next) {
     })
     console.log("here");
     console.log(filePath);
-   CompressWithDll( filePath + "$./uploads", function (error, result) {
+   /*CompressWithDll( filePath + "$./uploads", function (error, result) {
         if(error) throw error;
         console.log("compress result: ");
         console.log(result);
-    });
+    });*/
 })
 
 var storage = multer.diskStorage({
