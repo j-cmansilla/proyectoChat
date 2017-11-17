@@ -82,7 +82,7 @@ function comp (){
     console.log("  DLL>>>>")
     console.log("  File name => "+path);
     CompressWithDll( "./uploads/" + path, function (error, result) {
-        if(error) throw console.log(error);
+        if(error) console.log(error);
         console.log("  compress result: ");
         console.log(result);
     });
@@ -91,7 +91,7 @@ function desc(){
     console.log("  DLL>>>>")
     console.log("  File name => "+ "./uploads/" + path +".rlex");
     DecompressWithDll( "./uploads/" + path +".rlex", function (error, result) {
-        if(error) throw error;
+        if(error) console.log(error);
         console.log("  decompress result: ");
         console.log(result);
     });
