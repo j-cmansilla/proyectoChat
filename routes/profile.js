@@ -18,10 +18,21 @@ var DecompressWithDll = edge.func({
 const nodeRes = require('node-res')
 //var upload = multer({dest:'uploads/'});
 
-router.get('/download/:id', function(req, res, next) {
-    var file = 'uploads/'+req.params.id;
-    //console.log(req.params.id);
-    res.download(file, function(err){
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+  console.log("is here");
+  res.status(200).end();
+});
+
+router.post('/download', function(req, res, next) {
+    console.log("Archive "+req.body.fileToDownload);
+    CompressWithDll(req.body.fileToDownload, function (error, result) {
+        if(error) throw error;
+        console.log(result);
+    });
+    var pathFile = path.join(__dirname,'..','/uploads/',req.body.fileToDownload);
+    console.log(pathFile);
+    res.download(pathFile, function(err){
         if(err) console.log('ERROR: '+err);
         else console.log('Archivo descargado!');
     });
