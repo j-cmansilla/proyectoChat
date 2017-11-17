@@ -106,7 +106,7 @@ function desc(){
     });
     console.log("  END");
 }
- var upload = multer({ storage: storage },);//nop
+ var upload = multer({ storage: storage });//nop
  
 /* GET users listing. */
 router.get('/', function(req, res, next) {
