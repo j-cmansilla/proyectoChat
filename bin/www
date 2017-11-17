@@ -63,7 +63,7 @@ io.sockets.on('connection',function(socket){
   });
 
   socket.on('send message', function(data){
-    console.log('Youre sending a message');
+    console.log('Youre sending a message: '+data);
     io.sockets.emit('new message', {msg:data});
   });
 

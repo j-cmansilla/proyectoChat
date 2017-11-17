@@ -178,7 +178,7 @@ function uploadFile(){
     var documentUploaded = document.getElementById('upload');
     if(!fromUser)return;
     var archivo = `<a  href="${'/upload/'+documentUploaded.files[0].name}"><button class="btn info">Download</button></a>`;
-    alert(archivo);
+    //alert(archivo);
     //console.log(documentUploaded.files.length == 1);
     if(documentUploaded.files.length == 1){
         var message = {
