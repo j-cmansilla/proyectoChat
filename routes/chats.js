@@ -87,9 +87,8 @@ router.post('/', function(req, res, next) {
         });
         res.status(201).end();
     }else{
-        //res.render('/', { title: 'Express' });  
         console.log("signed out");
-        res.render('login', { title: 'Express' });
+        //res.render('login', { title: 'Express' });
         res.status(401).end();
     }
 });
