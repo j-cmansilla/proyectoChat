@@ -22,6 +22,7 @@ var DecryptWithDll = edge.func({
     methodName: "DecryptForP"
 });
 function checkTokenExpiration (){
+    try{
     console.log("CHECK TOKEN");
     var LocalStorage = require('node-localstorage').LocalStorage;
     localStorage = new LocalStorage('./scratch');
@@ -40,7 +41,8 @@ function checkTokenExpiration (){
       return false;
     }
     console.log("jwt => ok :)");
-    return true;
+    return true;}
+    catch (e){return false;}//req.flash('your session has expired please login again')
 }
 
 /* GET users listing. */
