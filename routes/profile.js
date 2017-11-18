@@ -24,6 +24,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
+    console.log("Logout .........");
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+    localStorage.clear();
     res.render('login');
     res.status(200).end();
 });
