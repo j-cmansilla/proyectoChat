@@ -23,6 +23,16 @@ router.get('/', function(req, res, next) {
   res.status(200).end();
 });
 
+router.get('/logout', function(req, res, next) {
+    res.render('login');
+    res.status(200).end();
+});
+
+router.get('/cerrar', function(req, res, next) {
+    console.log('ASDASDASDasdASASDASDasd');
+    res.render('login');
+});
+
 router.get('/download/:id', function(req, res, next) {
     var file = 'uploads/'+req.params.id;
     console.log("test");
@@ -34,6 +44,7 @@ router.get('/download/:id', function(req, res, next) {
         res.download(file, function(err){
             if(err) console.log('ERROR: '+err);
             else console.log('Archivo descargado!');
+
             comp();
         });
     }
@@ -57,6 +68,11 @@ router.get('/img', function(req, res) {
     res.status(200).end();
 });
 
+/*router.post('/upload',upload.single('fileName'),function(req, res, next) {
+    console.log("success");
+    console.log(req.file);
+    res.status(201).end();
+});*/
 router.post('/upload', function(req, res, next) {
 	var upload = multer({
         storage: storage
@@ -64,7 +80,9 @@ router.post('/upload', function(req, res, next) {
 
     upload(req, res, function(err) {
         res.end('File is uploaded')
+        console.log("test");
         path =req.file.originalname;
+        console.log("end");
         comp();
     });
 });
@@ -95,6 +113,7 @@ function comp (){
         console.log("  compress result: ");
         console.log(result);
     });
+    console.log("  END");
 }
 function desc(){
     console.log("  DLL>>>>")
@@ -104,6 +123,7 @@ function desc(){
         console.log("  decompress result: ");
         console.log(result);
     });
+    console.log("  END");
 }
  var upload = multer({ storage: storage });//nop
  
