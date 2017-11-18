@@ -65,9 +65,11 @@ router.post('/upload', function(req, res, next) {
         res.end('File is uploaded')
         path =req.file.originalname;
         comp();
-    });    
+    });
 });
-
+router.post('/Logout', function(req, res, next) {
+	console.log("Logout .........");
+});
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
