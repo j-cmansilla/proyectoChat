@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
     }
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', function(req, res, next) { 
     if(checkTokenExpiration()){
         var a;
         EncryotWithDll(req.body.message, function (error, result) {
@@ -86,7 +86,12 @@ router.post('/', function(req, res, next) {
             console.log('Message sent successfully!');
         });
         res.status(201).end();
-    }else{res.status(401).end();}
+    }else{
+        //res.render('/', { title: 'Express' });  
+        console.log("signed out");
+        res.render('login', { title: 'Express' });
+        res.status(401).end();
+    }
 });
 
 module.exports = router;

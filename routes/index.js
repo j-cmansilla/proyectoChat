@@ -18,7 +18,7 @@ function createToken(user){
     Username: user.userName,
     Password: user.password,
     Ini: moment().unix(),
-    Exp: moment().add(5,'m').unix()
+    Exp: moment().add(3,'m').unix()
   };               
   var token = jwt.encode(payload,"EST");
   //console.log("createTOKEN => "+ token);
@@ -52,11 +52,11 @@ router.post('/profile', function(req, res, next) {
     // object of all the users
     if(userFound[0]){
       res.render('profile', { userName: userFound[0].userName , userToSend:"Please select a chat..."});
+      createToken(newUser);
     }else{
       res.render('login', { title: 'Express' });
     }
     res.status(201).end();
-    createToken(newUser);
   });
 });
 

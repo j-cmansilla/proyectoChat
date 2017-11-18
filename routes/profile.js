@@ -3,6 +3,7 @@ var router = express.Router();
 var multer = require('multer');
 var path = require('path');
 var edge = require('edge');
+var logout = require('express-passport-logout');  
 
 var CompressWithDll = edge.func({
     assemblyFile: "dlls/Lab1-Compresion-de-Datos.dll",
@@ -67,10 +68,16 @@ router.post('/upload', function(req, res, next) {
         comp();
     });
 });
-router.post('/Logout', function(req, res, next) {
-	console.log("Logout .........");
+//////////////////////////////////////////////////////////////////
+router.post('/logout', function(req, res, next) {
+    console.log("Logout .........");
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+    localStorage.clear();
+    res.render('login', { title: 'Express' });
+    res.status(401).end();
 });
-
+//////////////////////////////////////////////////////////////////
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './uploads')
